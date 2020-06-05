@@ -47,17 +47,15 @@ def plot_phone(data):
 
     df = pd.crosstab(
         index=data['phone_service'],
-        columns=data['churn_label'],
-        normalize='index'
-    )*100
+        columns=data['churn_label']
+    )
     
     ax = df.plot(kind = 'barh', color=['#53a4b1','#c34454'], figsize = (8,6))
 
     # Plot Configuration
-    ax.xaxis.set_major_formatter(mtick.PercentFormatter())
     plt.legend(['Retain', 'Churn'],fancybox=True,shadow=True)
     plt.axes().get_yaxis().set_label_text('')
-    plt.title('Phone Service Customer')
+    plt.title('Phone Service Customer (Total)')
     
     # Save png file to IO buffer
     figfile = BytesIO()
@@ -75,7 +73,7 @@ def plot_internet(data):
     df = pd.crosstab(
         index=data['internet_service'],
         columns=data['churn_label'],
-        normalize='index'
+        normalize=True
     )*100
 
     ax = df.plot(kind = 'barh', color=['#53a4b1','#c34454'], figsize = (8,6))
@@ -84,7 +82,7 @@ def plot_internet(data):
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
     plt.legend(['Retain', 'Churn'],fancybox=True,shadow=True)
     plt.axes().get_yaxis().set_label_text('')
-    plt.title('Internet Service Customer')
+    plt.title('Internet Service Customer (Percent)')
 
     # Save png file to IO buffer
     figfile = BytesIO()
@@ -102,7 +100,7 @@ def plot_tenure_churn(data):
     df = pd.crosstab(
         index=data['tenure_group'],
         columns=data['churn_label'],
-        normalize='index'
+        normalize=True
     )*100
     
     ax = df.plot(kind = 'bar', color=['#53a4b1','#c34454'], figsize=(8, 6))
@@ -127,7 +125,14 @@ def plot_tenure_cltv(data):
 
     # ---- Average Lifetime Value by Tenure
 
-    ax = ______.plot(color=['#333333','#b3b3b3'], figsize=(8, 6),style = '.--')
+    df = pd.crosstab(
+        index=data['tenure_months'],
+        columns=data['churn_label'],
+        values=data['cltv'],
+        aggfunc='mean'
+    )
+    
+    ax = df.plot(color=['#333333','#b3b3b3'], figsize=(8, 6),style = '.--')
 
     # Plot Configuration
     plt.axes().get_xaxis().set_label_text('Tenure (in Months)')
@@ -145,3 +150,58 @@ def plot_tenure_cltv(data):
 
     return(result)
 
+def plot_revenue_by_service(data):
+
+    # ---- Monthly Revenue by Services
+
+    df = pd.crosstab(
+        index=[data['phone_service'], data['internet_service']],
+        columns=data['churn_label'],
+        values=data['monthly_charges'],
+        aggfunc='sum'
+    )
+    df.index = df.index.map(lambda x: '\n+ '.join([str(i) if i != 'No' else '' for i in x]).strip('\n+ '))
+    
+    ax = df.plot(kind='bar', stacked=True, color=['#53a4b1','#c34454'], figsize=(8, 6))
+
+    # Plot Configuration
+    ax.yaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
+    plt.axes().get_xaxis().set_label_text('')
+    plt.xticks(rotation = 25)
+    plt.legend(['Retained Revenue', 'Revenue Loss due to Churn'], fancybox=True, shadow=True)
+    plt.title('Monthly Revenue by Services')
+
+    # Save png file to IO buffer
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
+    figfile.seek(0)
+    figdata_png = base64.b64encode(figfile.getvalue())
+    result = str(figdata_png)[2:-1]
+
+    return(result)
+
+def plot_revenue_loss_by_city(data):
+
+    # ---- Cities with Most Revenue Loss due to Churn
+
+    df = data[data['churn_label']=='Yes'].groupby('city').agg({
+        'monthly_charges':'sum'
+    }).sort_values(by='monthly_charges', ascending=False).head(5)
+
+    ax = df.plot(kind='bar', color=['#c34454'], figsize=(8, 6))
+
+    # Plot Configuration
+    ax.yaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
+    plt.axes().get_xaxis().set_label_text('')
+    plt.xticks(rotation = 360)
+    plt.legend(['Monthly Revenue Loss'], fancybox=True, shadow=True)
+    plt.title('Cities with Most Revenue Loss due to Churn')
+
+    # Save png file to IO buffer
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
+    figfile.seek(0)
+    figdata_png = base64.b64encode(figfile.getvalue())
+    result = str(figdata_png)[2:-1]
+
+    return(result)

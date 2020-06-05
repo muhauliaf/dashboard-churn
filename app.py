@@ -37,17 +37,21 @@ def index():
 	# generate plot
 	plot_phone_res = plot_phone(raw)
 	plot_internet_res = plot_internet(raw)
-	# plot_tenure_cltv_res = plot_tenure_cltv(raw)
+	plot_tenure_cltv_res = plot_tenure_cltv(raw)
 	plot_tenure_churn_res = plot_tenure_churn(raw)
+	plot_revenue_by_service_res = plot_revenue_by_service(raw)
+	plot_revenue_loss_by_city_res = plot_revenue_loss_by_city(raw)
 
 	# render to html
 	return render_template('index.html',
-		   card_data = card_data, 
-		 plot_phone_res=plot_phone_res,
-		 plot_internet_res=plot_internet_res,
-		#  plot_tenure_cltv_res=plot_tenure_cltv_res,
-		 plot_tenure_churn_res=plot_tenure_churn_res
-		)
+		card_data = card_data, 
+		plot_phone_res=plot_phone_res,
+		plot_internet_res=plot_internet_res,
+		plot_tenure_cltv_res=plot_tenure_cltv_res,
+		plot_tenure_churn_res=plot_tenure_churn_res,
+		plot_revenue_by_service_res = plot_revenue_by_service_res,
+		plot_revenue_loss_by_city_res = plot_revenue_loss_by_city_res
+	)
 
 
 if __name__ == "__main__": 

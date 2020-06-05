@@ -78,7 +78,7 @@
 					</button>
 					<button class="tablinks" onclick="openTab(event, 'subscription')">Subscription Service
 					</button>
-					<button class="tablinks" onclick="openTab(event, 'Own')">(Create-Your-Own)
+					<button class="tablinks" onclick="openTab(event, 'Own')">Monthly Revenue
 					</button>
 				</div>
 			</div>
@@ -105,15 +105,25 @@
 				  <div class="img-container">
 				  	{% if funded_plot != None %}
                     <img src="data:image/png;base64,{{ plot_phone_res }}" style="width:46.5%;">
-					  {% endif %}
-					  {% if funded_plot != None %}
+					{% endif %}
+					{% if funded_plot != None %}
 					<img src="data:image/png;base64,{{ plot_internet_res }}" style="width:46.5%;">
-					  {% endif %}  
+					{% endif %}  
 				  </div>
 				</div>
 
 				<div id="Own" class="tabcontent">
 				  <!-- Define your own analysis -->
+				  <br>
+				  <h3 style="color: #333333;text-align:center">Monthly Revenue based on Charges</h3>
+				  <div class="img-container">
+				  	{% if funded_plot != None %}
+                    <img src="data:image/png;base64,{{ plot_revenue_by_service_res }}" style="width:46.5%;">
+					{% endif %}
+					{% if funded_plot != None %}
+					<img src="data:image/png;base64,{{ plot_revenue_loss_by_city_res }}" style="width:46.5%;">
+					{% endif %}
+				  </div>
 				</div>
 
 			</div>
