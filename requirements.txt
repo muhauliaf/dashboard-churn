@@ -131,5 +131,4 @@ urllib3==1.25.8
 webencodings==0.5.1
 webwhatsapi==2.0.5
 Werkzeug==1.0.0
-wxPython==4.0.7.post2
 zeep==3.4.0
