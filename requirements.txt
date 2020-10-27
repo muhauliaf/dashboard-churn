@@ -20,7 +20,7 @@ cirq==0.7.0
 cleo==0.7.6
 click==6.7
 clikit==0.4.2
-cryptography==2.8
+cryptography==3.2
 cycler==0.10.0
 decorator==4.4.2
 defusedxml==0.6.0
