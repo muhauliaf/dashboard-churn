@@ -39,7 +39,7 @@ google-auth-httplib2==0.0.3
 gunicorn==20.0.4
 h5py==2.10.0
 html5lib==1.0.1
-httplib2==0.17.0
+httplib2==0.19.0
 humanize==1.0.0
 idna==2.9
 isodate==0.6.0
