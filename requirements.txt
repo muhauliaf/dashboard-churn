@@ -127,7 +127,7 @@ tornado==6.0.4
 typing-extensions==3.7.4.1
 tzlocal==2.0.0
 uritemplate==3.0.1
-urllib3==1.25.8
+urllib3==1.26.5
 webencodings==0.5.1
 webwhatsapi==2.0.5
 Werkzeug==1.0.0
