@@ -72,7 +72,7 @@ pastel==0.2.0
 pexpect==4.8.0
 Pillow==7.0.0
 pkginfo==1.5.0.1
-poetry==1.0.5
+poetry==1.1.9
 protobuf==3.8.0
 ptyprocess==0.6.0
 pyasn1==0.4.8
